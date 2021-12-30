@@ -52,15 +52,11 @@ app.get('/weather', (req, res) => {
   if (address) {
     geocode(address, (error, { latitude, longitude, location } = {}) => {
       if (error) return res.send({ error });
-      forecast(latitude, longitude, (error, data) => {
+      forecast(latitude, longitude, (error, forecastData) => {
         if (error) return res.send({ error });
-        const { weather_descriptions, temperature, feelslike } = data;
         res.send({
           location,
-          forecast: `${weather_descriptions[0]}. ` +
-            `Currently it is ${temperature} degree celcius. ` +
-            `But it feels like ${feelslike} degrees.`,
-          address
+          forecastData
         });
       });
     });
